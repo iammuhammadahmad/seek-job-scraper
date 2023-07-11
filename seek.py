@@ -21,8 +21,10 @@ class Seek:
         try:
             if pageNo == 1:
                 r = requests.get(baseUrl + urlPath)
+                print("\n--> WEBSITE URL: ", baseUrl+urlPath)
             else:
                 r = requests.get(baseUrl + urlPath + "?page=" + str(pageNo))
+                print("\n--> WEBSITE URL: ", baseUrl+urlPath+"?page="+str(pageNo))
         except:
             time.sleep(5)
             # AGAIN REQUEST IF ANY ERROR
@@ -172,12 +174,12 @@ class Seek:
     def scrape(self, baseUrl, category, singlePage=0, pageFrom=0, pageTo=0):
         urlPath = "/" + category
         profession = category.split("-jobs")[0]
-
-        if singlePage == 0:
+        if pageFrom > 0 and pageTo > 0:
+            count = 1
             for pageNo in range(pageFrom, pageTo+1):
                 jobLinks = []
                 jobLinks = self.getJobLinks(baseUrl, urlPath, pageNo)
-                print(f"Total Jobs on PageNo: {pageNo} = {len(jobLinks)}")
+                print(f"\n--> TOTAL JOBS ON PAGE: {pageNo} = {len(jobLinks)}")
                 
                 # scrape jobs
                 for url in jobLinks: 
@@ -185,13 +187,16 @@ class Seek:
                     # If already exist in Google Sheet then ignore
                     isExist=gs_obj.isExist(worksheet, job)
                     if isExist:
-                        print("\nJOB ALREADY EXIST : ", job["Job URL"])
+                        print("\n--> JOB ALREADY EXIST : ", job["Job URL"])
                     else:
                         self.scrape_job(job["Job URL"], profession)
+                    print("\n--> TOTAL COMPLETED: ", count)
+                    count +=1
         else:
             jobLinks = []
+            count = 1
             jobLinks = self.getJobLinks(baseUrl, urlPath, singlePage)
-            print(f"Total Jobs on PageNo: {singlePage} = {len(jobLinks)}")
+            print(f"\n--> TOTAL JOBS ON PAGE: {singlePage} = {len(jobLinks)}")
             
             # scrape jobs
             for url in jobLinks: 
@@ -199,6 +204,8 @@ class Seek:
                 # If already exist in Google Sheet then ignore
                 isExist=gs_obj.isExist(worksheet, job)
                 if isExist:
-                    print("\nJOB ALREADY EXIST : ", job["Job URL"])
+                    print("\n--> JOB ALREADY EXIST : ", job["Job URL"])
                 else:
                     self.scrape_job(job["Job URL"], profession)
+                print("\n--> TOTAL COMPLETED: ", count)
+                count +=1

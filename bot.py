@@ -74,7 +74,6 @@ if __name__ == '__main__':
             if totalPage <= 0:
                 logging.error('Total page should be greater than 0 !')
                 sys.exit()
-            # pageNo = (input("\n-> Enter specific(i.e: 4) page no OR in range(i.e: 1-7) to be scraped: "))
 
             option = int(input('\n-> If you want to scrape single page then enter (1) OR (2) for Multi Page: '))
             print("\n-- SLECTED OPTION: ", option)
@@ -90,27 +89,26 @@ if __name__ == '__main__':
                     logging.error('INVALID PAGE NO!')
                     sys.exit()
 
-                seek_obj.scrape(baseUrl, category, singlePage)
+                seek_obj.scrape(baseUrl, category, singlePage, 0, 0)
                 
             
             # Multi Page
             if option == 2:
                 pageRange = input(f"\n-> Enter PAGE IN RANGE (i.e. 1-{totalPage}): ")
-                print("Page Range: ", pageRange)
                 pageFrom = int(pageRange.split('-')[0])
                 pageTo = int(pageRange.split('-')[-1])
-
+    
                 if (pageFrom <= 0 or pageFrom >= totalPage or pageFrom >= pageTo) or (pageTo < 0 or pageTo <= pageFrom or pageTo > totalPage):
                     logging.error(f'INVALID PAGE Range ({pageFrom}-{pageTo})')
                     sys.exit()
-                seek_obj.scrape(baseUrl, category, pageFrom, pageTo)
+                seek_obj.scrape(baseUrl, category,0, pageFrom, pageTo)
 
-        isRun = input("\nDO YOU WANT TO RUN AGAIN THEN WRITE (yes)? TO CANCEL PRESS ANY KEYWORD: ")
+        isRun = input("\n--> DO YOU WANT TO RUN AGAIN THEN WRITE (yes)? TO CANCEL PRESS ANY KEYWORD: ")
 
         if isRun == 'yes':
             pass
         else:
-            start = False
+            sys.exit()
                
                
 
