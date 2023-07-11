@@ -1,0 +1,8 @@
+# Requirements for Google Sheets
+gspread
+
+# Psychxchange
+requests
+bs4
+html5lib
+requests_html
