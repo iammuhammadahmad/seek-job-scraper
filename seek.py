@@ -104,7 +104,7 @@ class Seek:
                     matchListedAt = re.search(r'"listedAt":\s*(\{[^}]+\})', seek_redux_data)
                     if matchListedAt:
                         listedAt_json = matchListedAt.group(1)
-                        listedAt = json.loads(listedAt_json)["shortLabel"]
+                        listedAt = json.loads(listedAt_json)["label"]
 
             except Exception as error:
                 print("JOB LOCATION OR LISTED DATE NOT EXIST: ", error)
