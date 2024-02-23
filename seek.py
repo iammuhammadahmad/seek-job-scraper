@@ -36,7 +36,7 @@ class Seek:
 
         if r.status_code == 200:
             soup = BeautifulSoup(r.content, features="html.parser")
-            links = soup.select("._1wkzzau0._1wkzzauf._1wkzzau0._1wkzzauf.a1msqi5i.a1msqij.a1msqik.a1msqil.a1msqim.a1msqi7")
+            links = soup.select(".y735df0.y735dff.y735df0.y735dff._1iz8dgs5i._1iz8dgsj._1iz8dgsk._1iz8dgsl._1iz8dgsm._1iz8dgs7")
             for link in links:
                 href = link.get("href")
                 if href:
